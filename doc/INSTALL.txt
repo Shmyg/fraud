@@ -1,0 +1,32 @@
+DominiCanis system installation.
+1. Change Oracle database configuration and parameters
+ 1.1 Database must be in ARCHIVELOG mode
+ 1.2 Enable block change tracking
+ 1.3 Enable OS authentication
+ 1.4 Set DB_FILE_MULTIBLOCK_READ_COUNT = 16
+ 1.5 Set JOB_QUEUE_PROCESSES to the value greater than 0
+2. Create tablespace to contain database objects
+ 2.1 Tablespace must be locally managed
+ 2.2 Tablespace must be 'bigfile'
+ 2.3 Extent size for the tablespace 4M
+ 2.4 Block size for the tablespace 16K.
+3. Create database user.
+ 3.1 Default tablespace for the user must be the one created in p.2
+ 3.2 Grant quota unlimited on default tablespace
+ 3.3 Grant execute on dbms_stats to <owner>
+ 3.4 Grant execute on dbms_job to <owner> 
+ 3.5 Grant create session to <owner>
+ All the grants from pp. 3.3-3.5 could be granted through
+ $PROJECT_HOME/sql/setup/grants.sql
+4. Create database objects.
+ 4.1 Create auxiliary objects from LOGGER package using dbsetup.sql. Define 
+     <owner> variable befor launching the script
+ 4.2 Create main objects
+  All database objects can be created by the $PROJECT_HOME/sql/setup/dbsetup.sql
+  script or by running standalone scripts:
+  $PROJECT_HOME/sql/setup/tables.sql - for tables
+  $PROJECT_HOME/sql/setup/packages.sql - for packages
+  $PROJECT_HOME/sql/setup/mviews.sql - for materialized views
+  $PROJECT_HOME/sql/setup/jobs.sql - to create scheduled jobs
+  Define <owner> variable before launching the script
+5. Validate if all objects are valid. In case of necessity recompile them

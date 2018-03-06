@@ -1,0 +1,14 @@
+LOAD	DATA
+INFILE	*
+INTO	TABLE fraud_config
+TRUNCATE
+FIELDS	TERMINATED BY '|'
+	(
+	timeframe	INTEGER EXTERNAL,
+	moc_type_id	INTEGER EXTERNAL,
+	umc_imsi_prefix,
+	max_calls_qty	INTEGER EXTERNAL,
+	max_calls_dur	INTEGER EXTERNAL
+	)
+BEGINDATA
+3|1|255|10|30
